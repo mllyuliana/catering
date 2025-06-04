@@ -1,0 +1,52 @@
+/* Кастомные цвета для Jazzmin */
+:root {
+    --primary: #8E3B46 !important;
+    --accent: #C4A484 !important;
+    --navbar-bg: #8E3B46 !important;
+    --body-bg: #F6F3EF !important;
+}
+
+.navbar, .main-header, .navbar.navbar-static-top {
+    background-color: #8E3B46 !important;
+    color: #fff !important;
+}
+
+.main-header .logo, .navbar .navbar-brand {
+    color: #fff !important;
+}
+
+.sidebar, .main-sidebar {
+    background-color: #8E3B46 !important;
+    color: #fff !important;
+}
+
+.sidebar a, .main-sidebar a, .sidebar-menu > li > a {
+    color: #fff !important;
+}
+
+.sidebar a:hover, .main-sidebar a:hover, .sidebar-menu > li > a:hover,
+.sidebar-menu > li.active > a, .sidebar-menu > li.menu-open > a {
+    background-color: #C4A484 !important;
+    color: #8E3B46 !important;
+}
+
+body, .content-wrapper, .wrapper {
+    background-color: #F6F3EF !important;
+    color: #3B3735 !important;
+}
+
+a, .text-primary, .content-header h1, .content-header h2, .content-header h3 {
+    color: #8E3B46 !important;
+}
+
+.btn, .btn-primary, .btn-info, .btn-success {
+    background-color: #8E3B46 !important;
+    border-color: #8E3B46 !important;
+    color: #fff !important;
+}
+
+.btn:hover, .btn-primary:hover, .btn-info:hover, .btn-success:hover {
+    background-color: #C4A484 !important;
+    border-color: #C4A484 !important;
+    color: #8E3B46 !important;
+} 

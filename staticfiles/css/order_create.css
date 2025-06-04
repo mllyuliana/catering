@@ -1,0 +1,261 @@
+/* Импорт шрифтов */
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+/* Стили для шагов */
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: var(--background);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(59, 55, 53, 0.05);
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    position: relative;
+    flex: 1;
+}
+
+.step-number {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    font-family: 'Nunito Sans', sans-serif;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--background);
+    border: 2px solid var(--stone);
+}
+
+.step.active .step-number {
+    background-color: var(--wine);
+    color: white;
+    border-color: var(--wine);
+    box-shadow: 0 0 0 4px rgba(142, 59, 70, 0.2);
+    transform: scale(1.1);
+}
+
+.step.inactive .step-number {
+    background-color: var(--background);
+    color: var(--text);
+    border-color: var(--stone);
+}
+
+.step-line {
+    flex: 1;
+    height: 0.25rem;
+    margin: 0 0.75rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--stone);
+    border-radius: 0.125rem;
+}
+
+.step.active .step-line {
+    background-color: var(--wine);
+}
+
+.step.inactive .step-line {
+    background-color: var(--stone);
+}
+
+/* Стили для форм */
+.form-step {
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(59, 55, 53, 0.05);
+}
+
+.form-step.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-step h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--text);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Стили для карточек */
+.menu-card, .service-card {
+    border: 2px solid var(--stone);
+    border-radius: 1rem;
+    padding: 1.75rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(59, 55, 53, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-card:hover, .service-card:hover {
+    border-color: var(--wine);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(59, 55, 53, 0.1);
+}
+
+.menu-card.selected, .service-card.selected {
+    border-color: var(--wine);
+    background-color: var(--background);
+    box-shadow: 0 0 0 3px rgba(142, 59, 70, 0.2);
+}
+
+.menu-card.selected::before, .service-card.selected::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--wine);
+}
+
+.menu-card h3, .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--text);
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.menu-card p, .service-card p {
+    font-family: 'Nunito Sans', sans-serif;
+    color: var(--text);
+    opacity: 0.8;
+}
+
+/* Стили для кнопок */
+.btn {
+    padding: 0.875rem 1.75rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: 'Nunito Sans', sans-serif;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.btn-primary {
+    background-color: var(--wine);
+    color: white;
+    box-shadow: 0 4px 6px rgba(142, 59, 70, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #7a2f3a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(142, 59, 70, 0.3);
+}
+
+.btn-secondary {
+    background-color: var(--background);
+    color: var(--text);
+    border: 2px solid var(--stone);
+}
+
+.btn-secondary:hover {
+    background-color: var(--stone);
+    border-color: var(--champange);
+    transform: translateY(-2px);
+}
+
+/* Стили для полей ввода */
+.form-input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--stone);
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-family: 'Nunito Sans', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+}
+
+.form-input:focus {
+    border-color: var(--wine);
+    box-shadow: 0 0 0 3px rgba(142, 59, 70, 0.2);
+    outline: none;
+    background-color: white;
+}
+
+/* Стили для сообщений об ошибках */
+.error-message {
+    color: var(--wine);
+    font-size: 0.875rem;
+    font-family: 'Nunito Sans', sans-serif;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: rgba(142, 59, 70, 0.1);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(142, 59, 70, 0.2);
+}
+
+/* Стили для блока с общей стоимостью */
+.total-cost {
+    border: 2px solid var(--stone);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(59, 55, 53, 0.05);
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.total-cost:hover {
+    box-shadow: 0 8px 12px rgba(59, 55, 53, 0.1);
+    transform: translateY(-2px);
+}
+
+.total-cost h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--text);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.total-cost .text-2xl {
+    color: var(--wine);
+    font-weight: 700;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.total-cost .text-sm {
+    color: var(--text);
+    opacity: 0.8;
+    font-family: 'Nunito Sans', sans-serif;
+    margin-top: 0.5rem;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-step.active {
+    animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+} 

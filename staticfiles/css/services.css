@@ -1,0 +1,307 @@
+.services {
+    width: 100%;
+    min-height: 100vh;
+    background: #F6F3EF;
+    padding: 80px 120px;
+    box-sizing: border-box;
+}
+
+.services-header {
+    text-align: center;
+    margin-bottom: 64px;
+}
+
+.services-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: #3B3735;
+    margin: 0;
+}
+
+.services-subtitle {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 20px;
+    color: rgba(59, 55, 53, 0.8);
+    margin: 24px 0 0;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.services-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.service-card {
+    background: #FFFFFF;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+}
+
+.service-photo {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.service-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.service-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.service-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: #3B3735;
+    margin: 0;
+}
+
+.service-description {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #3B3735;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.service-button {
+    background: #8E3B46;
+    color: #F6F3EF;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+}
+
+.service-button:hover {
+    background: #C4A484;
+}
+
+/* --- CTA Section Modern Style (compact & contrast button) --- */
+.cta-section {
+    background: linear-gradient(120deg, #C4A484 0%, #8E3B46 100%);
+    border-radius: 20px;
+    padding: 28px 16px;
+    margin-top: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 8px 32px rgba(140, 58, 70, 0.10);
+}
+
+.cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 12px;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(59,55,53,0.10);
+}
+
+.cta-section .cta-button,
+.cta-section a,
+.cta-section .modal-button-link {
+    background: #8E3B46;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 32px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(59,55,53,0.08);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.cta-section .cta-button:hover,
+.cta-section a:hover,
+.cta-section .modal-button-link:hover {
+    background: #C4A484;
+    color: #8E3B46;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 18px rgba(140, 58, 70, 0.18);
+}
+
+@media (max-width: 768px) {
+    .cta-section {
+        padding: 16px 4px;
+        margin-top: 24px;
+        border-radius: 12px;
+        gap: 10px;
+    }
+    .cta-title {
+        font-size: 18px;
+    }
+    .cta-section .cta-button,
+    .cta-section a,
+    .cta-section .modal-button-link {
+        font-size: 15px;
+        padding: 8px 16px;
+    }
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #FFFFFF;
+    width: 700px;
+    max-width: 90%;
+    max-height: 90vh;
+    border-radius: 24px;
+    padding: 40px;
+    position: relative;
+    overflow-y: auto;
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #3B3735;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+    color: #8E3B46;
+}
+
+.modal-photo {
+    width: 100%;
+    height: 250px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.modal-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: #3B3735;
+    margin: 0 0 16px;
+}
+
+.modal-subtitle {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 20px;
+    color: rgba(59, 55, 53, 0.8);
+    margin: 0 0 24px;
+}
+
+.modal-description {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #3B3735;
+    line-height: 1.6;
+    margin: 0 0 16px;
+}
+
+.modal-features {
+    margin: 32px 0;
+}
+
+.modal-features h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    color: #3B3735;
+    margin: 0 0 16px;
+}
+
+.modal-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modal-features li {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #3B3735;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal-button {
+    width: 100%;
+    margin-top: 24px;
+}
+
+.modal-button-link {
+    display: block;
+    background: #8E3B46;
+    color: #F6F3EF;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 32px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+.modal-button-link:hover {
+    background: #C4A484;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+} 

@@ -1,175 +1,241 @@
 :root {
-    --primary-color: #ff6b6b;
-    --secondary-color: #4ecdc4;
-    --dark-color: #2d3436;
-    --light-color: #f8f9fa;
-    --success-color: #00b894;
-    --warning-color: #fdcb6e;
-    --danger-color: #d63031;
+    --text: #3B3735;
+    --background: #F6F3EF;
+    --champange: #C4A484;
+    --wine: #8E3B46;
+    --stone: #D8CFC4;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    color: var(--dark-color);
-    background-color: var(--light-color);
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito Sans', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
 }
 
-/* Навигация */
-.navbar {
-    background-color: var(--dark-color) !important;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.navbar-brand {
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
     font-weight: 700;
-    color: var(--light-color) !important;
+    color: var(--text);
 }
 
-.nav-link {
-    color: var(--light-color) !important;
-    transition: color 0.3s ease;
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+} 
+/* Footer */
+.footer {
+    height: 400px;
+    background-color: var(--background);
+    padding: 80px 0;
 }
 
-.nav-link:hover {
-    color: var(--primary-color) !important;
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    padding: 0 120px;
+    height: 100%;
 }
 
-/* Кнопки */
-.btn-primary {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
 }
 
-.btn-primary:hover {
-    background-color: #ff5252;
-    border-color: #ff5252;
+.footer-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 32px;
 }
 
-.btn-success {
-    background-color: var(--success-color);
-    border-color: var(--success-color);
+.footer-social {
+    display: flex;
+    gap: 16px;
 }
 
-/* Карточки */
-.card {
+.social-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.footer-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+}
+
+.footer-link {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    color: var(--wine);
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.profile-icon {
+    background: none;
     border: none;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    padding: 0;
+    cursor: pointer;
     transition: transform 0.3s ease;
 }
 
-.card:hover {
-    transform: translateY(-5px);
+.profile-icon:hover {
+    transform: scale(1.1);
 }
 
-.card-header {
-    background-color: var(--light-color);
-    border-bottom: none;
+.profile-icon svg {
+    display: block;
 }
 
-/* Формы */
-.form-control {
+/* Стили для активного состояния иконки */
+.profile-icon.active svg circle {
+    fill: var(--wine);
+}
+
+/* Стили для модального окна авторизации */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: var(--background);
+    margin: 15% auto;
+    padding: 20px;
     border-radius: 8px;
-    border: 1px solid #ddd;
-    padding: 10px 15px;
+    width: 400px;
+    position: relative;
 }
 
-.form-control:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.2rem rgba(255, 107, 107, 0.25);
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-/* Заголовки */
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
-    color: var(--dark-color);
+.auth-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--stone);
 }
 
-/* Футер */
-footer {
-    background-color: var(--dark-color);
-    color: var(--light-color);
-    padding: 2rem 0;
-    margin-top: 3rem;
+.auth-tab {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text);
 }
 
-/* Анимации */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.auth-tab.active {
+    color: var(--wine);
+    border-bottom: 2px solid var(--wine);
 }
 
-.fade-in {
-    animation: fadeIn 0.5s ease-in;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .navbar-brand {
-        font-size: 1.2rem;
-    }
-    
-    .card {
-        margin-bottom: 1rem;
-    }
-}
-
-/* Специальные стили для калькулятора */
-.calculator-result {
-    background-color: var(--light-color);
-    border-radius: 10px;
-    padding: 20px;
+.auth-form {
     margin-top: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.calculator-result h4 {
-    color: var(--primary-color);
+.form-group {
     margin-bottom: 15px;
 }
 
-/* Стили для меню */
-.menu-item {
-    margin-bottom: 30px;
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text);
 }
 
-.menu-item img {
-    border-radius: 10px;
-    margin-bottom: 15px;
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--stone);
+    border-radius: 4px;
 }
 
-.menu-item h3 {
-    color: var(--primary-color);
-    margin-bottom: 10px;
-}
-
-/* Стили для календаря */
-.calendar-container {
-    background-color: white;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.fc-event {
-    border-radius: 5px;
-    padding: 5px;
-    margin: 2px 0;
-}
-
-/* Стили для профиля */
-.profile-header {
-    background-color: var(--primary-color);
+.auth-button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--wine);
     color: white;
-    padding: 2rem 0;
-    margin-bottom: 2rem;
-    border-radius: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.profile-avatar {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 5px solid white;
-    margin-bottom: 1rem;
+.auth-button:hover {
+    background-color: var(--champange);
+}
+
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: var(--background);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 8px;
+    padding: 8px 0;
+}
+
+.profile-dropdown:hover .profile-dropdown-content {
+    display: block;
+}
+
+.profile-dropdown-content a {
+    color: var(--text);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.profile-dropdown-content a:hover {
+    background-color: var(--stone);
+}
+
+.logout-link {
+    color: var(--wine) !important;
+    border-top: 1px solid var(--stone);
+    margin-top: 8px;
+}
+
+.logout-link:hover {
+    background-color: var(--wine) !important;
+    color: white !important;
 } 
