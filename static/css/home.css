@@ -1,0 +1,402 @@
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: 720px;
+    background-image: url('../images/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1) 0.1s both;
+    transition: background-size 2s cubic-bezier(.4,0,.2,1);
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(59, 55, 53, 0.3); /* 3B3735 с прозрачностью 30% */
+}
+
+.hero-content {
+    position: relative;
+    padding-left: 120px;
+    padding-right: 120px;
+    padding-top: 160px;
+    animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1) 0.4s both;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 56px;
+    color: var(--background);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1) 0.7s both;
+}
+
+.hero-subtitle {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    color: var(--background);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1) 1s both;
+}
+
+.hero-button {
+    width: 200px;
+    height: 60px;
+    background-color: var(--wine);
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(.4,0,.2,1), box-shadow 0.2s;
+}
+
+.hero-button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 8px 32px rgba(140, 58, 70, 0.18);
+}
+
+.hero-button-text {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--background);
+}
+
+/* Удаляем конфликтующие стили CTA */
+.CTA, .CTA .text-wrapper-6 {
+    display: none;
+}
+
+/* Utility Bar */
+.utility-bar {
+    background-color: var(--stone);
+    height: 40px;
+    width: 100%;
+    padding: 0 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.phone-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.phone-icon {
+    width: 17px;
+    height: 17px;
+}
+
+.phone-number {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    letter-spacing: 2px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 12px;
+}
+
+.social-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+/* Benefits Section */
+.benefits-section {
+    padding: 80px 0;
+    background-color: var(--background);
+}
+
+.benefits-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 40px;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.benefits-cards {
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    padding: 0 120px;
+}
+
+.benefit-card {
+    width: 360px;
+    height: 280px;
+    background-color: var(--stone);
+    border-radius: 8px;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1) 1.5s both;
+}
+
+.benefit-card:nth-child(2) {
+    animation-delay: 1.7s;
+}
+
+.benefit-card:nth-child(3) {
+    animation-delay: 1.9s;
+}
+
+.benefit-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 24px;
+}
+
+.benefit-card-title {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--text);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.benefit-card-text {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: var(--text);
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* Services Section */
+.services-section {
+    min-height: 800px;
+    background-color: var(--background);
+    display: flex;
+    align-items: center;
+    padding: 40px 0;
+    opacity: 0;
+    animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1) 2.2s both;
+}
+
+.services-content {
+    display: flex;
+    align-items: center;
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.services-image {
+    width: 600px;
+    height: 600px;
+    margin: 100px 80px 100px 220px;
+    object-fit: cover;
+}
+
+.services-info {
+    margin: 188px 0;
+    max-width: 400px;
+}
+
+.services-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 40px;
+    color: var(--text);
+    margin-bottom: 42px;
+}
+
+.services-list {
+    list-style-type: disc;
+    margin: 0 0 42px 20px;
+    padding: 0;
+}
+
+.services-list li {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--text);
+    margin-bottom: 16px;
+}
+
+.services-button {
+    width: 280px;
+    height: 56px;
+    background-color: var(--wine);
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(.4,0,.2,1), box-shadow 0.2s;
+}
+
+.services-button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 8px 32px rgba(140, 58, 70, 0.18);
+}
+
+.services-button-text {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: var(--background);
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 1440px) {
+    .services-image {
+        margin: 100px 60px 100px 120px;
+        width: 500px;
+        height: 500px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .services-image {
+        margin: 80px 40px 80px 60px;
+        width: 400px;
+        height: 400px;
+    }
+    
+    .services-info {
+        margin: 120px 40px;
+    }
+}
+
+@media (max-width: 992px) {
+    .services-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .services-image {
+        margin: 40px auto;
+    }
+    
+    .services-info {
+        margin: 40px auto;
+    }
+    
+    .services-list {
+        text-align: left;
+        display: inline-block;
+    }
+    
+    .services-button {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .services-image {
+        width: 300px;
+        height: 300px;
+        margin: 20px auto;
+    }
+    
+    .services-info {
+        margin: 20px;
+    }
+    
+    .services-title {
+        font-size: 32px;
+    }
+    
+    .services-list li {
+        font-size: 18px;
+    }
+    
+    .services-button {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* CTA Section */
+.cta-section {
+    height: 400px;
+    background-color: var(--wine);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1) 2.5s both;
+}
+
+.cta-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 48px;
+    color: var(--background);
+    margin-top: 80px;
+    margin-bottom: 24px;
+}
+
+.cta-subtitle {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    color: var(--background);
+    margin-bottom: 58px;
+    max-width: 800px;
+}
+
+.cta-button {
+    width: 221px;
+    height: 56px;
+    background-color: var(--champange);
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(.4,0,.2,1), box-shadow 0.2s;
+}
+
+.cta-button:hover {
+    transform: scale(1.07);
+    box-shadow: 0 8px 32px rgba(140, 58, 70, 0.18);
+}
+
+.cta-button-text {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--background);
+}
+
+/* --- Animations for Home Page --- */
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+/* Scale-in for buttons */
+@keyframes scaleIn {
+    from { transform: scale(0.95);}
+    to { transform: scale(1);}
+}

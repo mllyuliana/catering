@@ -1,0 +1,147 @@
+{% extends 'catering_app/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-circles">
+        <img src="/static/images/about/grapes.svg" alt="About Icon" class="about-icon">
+        <div class="hero-line"></div>
+    </div>
+    <h1 class="hero-title">Savore</h1>
+    <p class="hero-subtitle">С 2025 года создаем моменты</p>
+    <div class="hero-line-bottom"></div>
+</div>
+
+<div class="story">
+    <div class="story-marker marker-1"></div>
+    <div class="story-marker marker-2"></div>
+    <div class="story-marker marker-3"></div>
+    <div class="story-marker marker-4"></div>
+    <div class="story-line"></div>
+    <div class="story-card story-card-1">
+        <div class="story-year">2010</div>
+        <h3 class="story-title">Рождение идеи</h3>
+        <p class="story-text">Первое меню: 10 видов десертов и мини-закусок. Ключевые клиенты: свадьбы и детские праздники</p>
+    </div>
+    <div class="story-card story-card-2">
+        <div class="story-year">2018</div>
+        <h3 class="story-title">Признание</h3>
+        <p class="story-text">Победа в премии "Лучший кейтеринг региона". Открытие кулинарной лаборатории. Внедрение эко-упаковки и zero-waste концепции</p>
+    </div>
+    <div class="story-card story-card-3">
+        <div class="story-year">2015</div>
+        <h3 class="story-title">Выход на новый уровень</h3>
+        <p class="story-text">Запуск мобильного бара с авторскими коктейлями. Первое мероприятие на 200+ гостей. Сотрудничество с винодельней "Солнечная долина"</p>
+    </div>
+    <div class="story-card story-card-4">
+        <div class="story-year">2023</div>
+        <h3 class="story-title">Новые горизонты</h3>
+        <p class="story-text">Запуск франшизы в 5 городах. Онлайн-курсы по организации мероприятий. Участие в международной выставке GastroWeek</p>
+    </div>
+</div>
+
+<div class="team">
+    <h2 class="team-title">Наша команда</h2>
+    <p class="team-subtitle">Профессионалы, которые сделают ваш праздник идеальным</p>
+    <div class="team-cards">
+        <div class="team-card">
+            <div class="team-photo">
+                <img src="/static/images/about/chef.jpg" alt="Алексей Иванов">
+            </div>
+            <h3 class="team-name">Алексей Иванов</h3>
+            <p class="team-position">Шеф-повар</p>
+            <div class="team-divider"></div>
+            <p class="team-description">Специалист по фьюжн-кухне. Автор меню. Работал в ресторанах Европы.</p>
+            <div class="team-social">
+                <a href="#" class="social-link">
+                    <img src="/static/images/about/link.svg" alt="LinkedIn">
+                </a>
+                <a href="#" class="social-link">
+                    <img src="/static/images/about/inst.svg" alt="Instagram">
+                </a>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-photo">
+                <img src="/static/images/about/confectioner.jpg" alt="Мария Смирнова">
+            </div>
+            <h3 class="team-name">Мария Смирнова</h3>
+            <p class="team-position">Ведущий кондитер</p>
+            <div class="team-divider"></div>
+            <p class="team-description">Эксперт по молекулярной кухне. Лауреат конкурса "Сладкий Минск-2023". Финалист Bake Off Belarus.</p>
+            <div class="team-social">
+                <a href="#" class="social-link">
+                    <img src="/static/images/about/link.svg" alt="LinkedIn">
+                </a>
+                <a href="#" class="social-link">
+                    <img src="/static/images/about/inst.svg" alt="Instagram">
+                </a>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-photo">
+                <img src="/static/images/about/barmen.jpg" alt="Денис Петров">
+            </div>
+            <h3 class="team-name">Денис Петров</h3>
+            <p class="team-position">Шеф-бармен</p>
+            <div class="team-divider"></div>
+            <p class="team-description">Автор коктейлей на основе "Кристалла" и местных трав. Провел 200+ мастер-классов.</p>
+            <div class="team-social">
+                <a href="#" class="social-link">
+                    <img src="/static/images/about/link.svg" alt="LinkedIn">
+                </a>
+                <a href="#" class="social-link">
+                    <img src="/static/images/about/inst.svg" alt="Instagram">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="values">
+    <div class="values-header">
+        <h2 class="values-title">Наши ценности</h2>
+        <p class="values-subtitle">То, что делает наш сервис уникальным</p>
+        <div class="values-divider"></div>
+    </div>
+    <div class="values-cards">
+        <div class="value-card">
+            <div class="value-icon">
+                <img src="/static/images/about/world.svg" alt="Экологичность">
+            </div>
+            <h3 class="value-title">Экологичность</h3>
+            <div class="value-card-divider"></div>
+            <p class="value-description">Используем биоразлагаемую упаковку. Сортируем 90% отходов. Работаем с локальными фермерами.</p>
+        </div>
+        <div class="value-card">
+            <div class="value-icon">
+                <img src="/static/images/about/diamond.svg" alt="Премиум-качество">
+            </div>
+            <h3 class="value-title">Премиум-качество</h3>
+            <div class="value-card-divider"></div>
+            <p class="value-description">Шеф-повара с 10-летним опытом. Постное/веганское меню по запросу.</p>
+        </div>
+        <div class="value-card">
+            <div class="value-icon">
+                <img src="/static/images/about/brush.svg" alt="Творческий подход">
+            </div>
+            <h3 class="value-title">Творческий подход</h3>
+            <div class="value-card-divider"></div>
+            <p class="value-description">Персонализированные десерты с гравировкой. Авторские концепции оформления.</p>
+        </div>
+    </div>
+</div>
+
+<div class="cta">
+    <div class="cta-content">
+        <h2 class="cta-title">Узнайте точную стоимость</h2>
+        <div class="cta-divider"></div>
+        <p class="cta-subtitle">Ответьте на 5 вопросов и получите:</p>
+        <button class="cta-button">Рассчитать стоимость</button>
+    </div>
+</div>
+{% endblock %} 

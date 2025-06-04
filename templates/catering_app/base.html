@@ -1,0 +1,428 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    {% block extra_css %}
+    <style>
+    /* Сброс стилей для модального окна */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1055 !important;
+        display: none;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        outline: 0;
+    }
+
+    .modal-dialog {
+        position: relative;
+        width: auto;
+        margin: 1.75rem auto;
+        pointer-events: auto;
+    }
+
+    .modal-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        pointer-events: auto;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 0.3rem;
+        outline: 0;
+    }
+
+    .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1050 !important;
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
+    }
+
+    .modal-backdrop.show {
+        opacity: 0.5;
+    }
+
+    .modal.show {
+        display: block !important;
+    }
+
+    /* Стили для табов */
+    .nav-tabs {
+        border-bottom: 1px solid #dee2e6;
+        margin-bottom: 1rem;
+    }
+
+    .nav-tabs .nav-link {
+        margin-bottom: -1px;
+        border: 1px solid transparent;
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+        cursor: pointer;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: #495057;
+        background-color: #fff;
+        border-color: #dee2e6 #dee2e6 #fff;
+    }
+
+    .tab-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .tab-pane {
+        display: none;
+    }
+
+    .tab-pane.show {
+        display: block;
+    }
+    </style>
+    {% endblock %}
+</head>
+
+<body>
+    <div class="utility-bar">
+        <div class="phone-container">
+            <img src="{% static 'images/phone-icon.svg' %}" alt="Phone" class="phone-icon">
+            <span class="phone-number">+375 (29) 123-45-67</span>
+        </div>
+        <div class="social-icons">
+            <img src="{% static 'images/instagram.svg' %}" alt="Instagram" class="social-icon">
+            <img src="{% static 'images/telegram.svg' %}" alt="Telegram" class="social-icon">
+            <img src="{% static 'images/viber.svg' %}" alt="Viber" class="social-icon">
+        </div>
+    </div>
+
+    <header class="header">
+        <a href="{% url 'home' %}" class="logo-link">
+            <img src="{% static 'images/logotip.svg' %}" alt="Logo" class="logotip">
+        </a>
+        <nav class="navbar">
+            <a href="{% url 'services' %}" class="nav-link">Услуги</a>
+            <a href="{% url 'menu:menu_list' %}" class="nav-link">Меню</a>
+            <a href="{% url 'gallery' %}" class="nav-link">Галерея</a>
+            <a href="{% url 'about' %}" class="nav-link">О нас</a>
+            <a href="{% url 'contacts' %}" class="nav-link">Контакты</a>
+        </nav>
+        <div class="header-buttons">
+            {% if user.is_authenticated %}
+                <a href="{% url 'orders:order_create' %}" class="order-button">
+                    <span class="order-button-text">Заказать</span>
+                </a>
+            {% else %}
+                <button onclick="openAuthModal()" class="order-button">
+                    <span class="order-button-text">Заказать</span>
+                </button>
+            {% endif %}
+            {% if user.is_authenticated %}
+                <div class="profile-dropdown">
+                    <a href="{% url 'users:profile' %}" class="profile-icon">
+                        <svg width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="18.5" cy="18.5" r="18.5" fill="#C4A484"/>
+                            <path d="M18.5 19.5C21.8137 19.5 24.5 16.8137 24.5 13.5C24.5 10.1863 21.8137 7.5 18.5 7.5C15.1863 7.5 12.5 10.1863 12.5 13.5C12.5 16.8137 15.1863 19.5 18.5 19.5Z" fill="white"/>
+                            <path d="M18.5 21.5C13.5 21.5 9.5 25.5 9.5 30.5V37H27.5V30.5C27.5 25.5 23.5 21.5 18.5 21.5Z" fill="white"/>
+                        </svg>
+                    </a>
+                
+
+                </div> 
+            {% else %}
+                <button class="profile-icon" onclick="openAuthModal()">
+                    <svg width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="18.5" cy="18.5" r="18.5" fill="#C4A484"/>
+                        <path d="M18.5 19.5C21.8137 19.5 24.5 16.8137 24.5 13.5C24.5 10.1863 21.8137 7.5 18.5 7.5C15.1863 7.5 12.5 10.1863 12.5 13.5C12.5 16.8137 15.1863 19.5 18.5 19.5Z" fill="white"/>
+                        <path d="M18.5 21.5C13.5 21.5 9.5 25.5 9.5 30.5V37H27.5V30.5C27.5 25.5 23.5 21.5 18.5 21.5Z" fill="white"/>
+                    </svg>
+                </button>
+            {% endif %}
+        </div>
+    </header>
+
+    <!-- Модальное окно авторизации -->
+    <div class="modal fade" id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="authModalLabel">Авторизация</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs" id="authTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab" aria-controls="login" aria-selected="true">Вход</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button" role="tab" aria-controls="register" aria-selected="false">Регистрация</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-3" id="authTabContent">
+                        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                            <form method="post" action="{% url 'users:login' %}" id="loginForm">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Имя пользователя</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Пароль</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Войти</button>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                            <form method="post" action="{% url 'users:register' %}" id="registerForm">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label for="reg_username" class="form-label">Имя пользователя</label>
+                                    <input type="text" class="form-control" id="reg_username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="reg_email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="reg_email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="reg_phone" class="form-label">Номер телефона</label>
+                                    <input type="tel" class="form-control" id="reg_phone" name="phone" pattern="[0-9]{12}" placeholder="375XXXXXXXXX" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="reg_password" class="form-label">Пароль</label>
+                                    <input type="password" class="form-control" id="reg_password" name="password1" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="reg_password2" class="form-label">Подтвердите пароль</label>
+                                    <input type="password" class="form-control" id="reg_password2" name="password2" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <img src="{% static 'images/logotip.svg' %}" alt="Logo" class="footer-logo">
+                <div class="footer-social">
+                    <a href="#" class="social-link">
+                        <img src="{% static 'images/instagram.svg' %}" alt="Instagram" class="social-icon">
+                    </a>
+                    <a href="#" class="social-link">
+                        <img src="{% static 'images/telegram.svg' %}" alt="Telegram" class="social-icon">
+                    </a>
+                    <a href="#" class="social-link">
+                        <img src="{% static 'images/viber.svg' %}" alt="Viber" class="social-icon">
+                    </a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <nav class="footer-menu">
+                    <a href="{% url 'services' %}" class="footer-link">Услуги</a>
+                    <a href="{% url 'menu:menu_list' %}" class="footer-link">Меню</a>
+                    <a href="{% url 'gallery' %}" class="footer-link">Галерея</a>
+                    <a href="{% url 'about' %}" class="footer-link">О нас</a>
+                    <a href="{% url 'contacts' %}" class="footer-link">Контакты</a>
+                </nav>
+            </div>
+            <div class="footer-column">
+                <div class="footer-contacts">
+                    <div class="footer-contact-item">
+                        <img src="{% static 'images/phone-icon.svg' %}" alt="Phone" class="footer-contact-icon">
+                        <span class="footer-contact-text">+375 (29) 123-45-67</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <img src="{% static 'images/email-icon.svg' %}" alt="Email" class="footer-contact-icon">
+                        <span class="footer-contact-text">savore@catering.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-column">
+                <div class="footer-subscribe">
+                    <h3 class="footer-subscribe-title">Твоя тарелка новостей</h3>
+                    <input type="email" placeholder="Ваш email" class="footer-subscribe-input">
+                    <button class="footer-subscribe-button">Подписаться</button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    {% block extra_js %}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM Content Loaded');
+        
+        // Проверка наличия Bootstrap
+        if (typeof bootstrap === 'undefined') {
+            console.error('Bootstrap is not loaded!');
+            return;
+        }
+        
+        // Инициализация модального окна авторизации
+        const authModalElement = document.getElementById('authModal');
+        console.log('Auth Modal Element:', authModalElement);
+        
+        let authModal = null;
+        try {
+            authModal = new bootstrap.Modal(authModalElement, {
+                backdrop: true,
+                keyboard: true,
+                focus: true
+            });
+            console.log('Auth Modal Instance:', authModal);
+        } catch (error) {
+            console.error('Error initializing auth modal:', error);
+        }
+        
+        // Функция открытия модального окна авторизации
+        window.openAuthModal = function() {
+            console.log('Opening auth modal');
+            if (authModal) {
+                try {
+                    authModal.show();
+                    console.log('Modal shown successfully');
+                    
+                    // Установка фокуса на первое поле ввода после анимации
+                    setTimeout(() => {
+                        const activeTab = document.querySelector('#authTabs .nav-link.active');
+                        const targetId = activeTab.getAttribute('data-bs-target');
+                        const targetPane = document.querySelector(targetId);
+                        const firstInput = targetPane.querySelector('input');
+                        if (firstInput) {
+                            firstInput.focus();
+                        }
+                    }, 300);
+                } catch (error) {
+                    console.error('Error showing modal:', error);
+                }
+            } else {
+                console.error('Auth modal not initialized');
+            }
+        };
+
+        // Обработка отправки формы входа
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            console.log('Login form found');
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Login form submitted');
+                const formData = new FormData(this);
+                
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Login response:', data);
+                    if (data.success) {
+                        window.location.href = '{% url "orders:order_create" %}';
+                    } else {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'alert alert-danger';
+                        errorDiv.textContent = data.error || 'Ошибка входа';
+                        loginForm.insertBefore(errorDiv, loginForm.firstChild);
+                    }
+                })
+                .catch(error => {
+                    console.error('Login error:', error);
+                });
+            });
+        }
+
+        // Обработка отправки формы регистрации
+        const registerForm = document.getElementById('registerForm');
+        if (registerForm) {
+            console.log('Register form found');
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Register form submitted');
+                const formData = new FormData(this);
+                
+                // Проверка формата номера телефона
+                const phone = formData.get('phone');
+                if (phone.length !== 12 || !phone.startsWith('375')) {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'alert alert-danger';
+                    errorDiv.textContent = 'Пожалуйста, введите корректный номер телефона в формате 375XXXXXXXXX';
+                    registerForm.insertBefore(errorDiv, registerForm.firstChild);
+                    return;
+                }
+                
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Register response:', data);
+                    if (data.success) {
+                        window.location.href = '{% url "orders:order_create" %}';
+                    } else {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'alert alert-danger';
+                        errorDiv.textContent = data.error || 'Ошибка регистрации';
+                        registerForm.insertBefore(errorDiv, registerForm.firstChild);
+                    }
+                })
+                .catch(error => {
+                    console.error('Register error:', error);
+                });
+            });
+        }
+
+        // Форматирование номера телефона
+        const phoneInput = document.getElementById('reg_phone');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 12) {
+                    value = value.slice(0, 12);
+                }
+                e.target.value = value;
+            });
+        }
+    });
+    </script>
+    {% endblock %}
+</body>
+</html> 

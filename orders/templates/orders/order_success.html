@@ -1,0 +1,23 @@
+{% extends 'catering_app/base.html' %}
+
+{% block title %}Заказ оформлен - Кейтеринг и Мобильный Бар{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2 text-center">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title mb-4">Спасибо за ваш заказ!</h1>
+                <div class="mb-4">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                </div>
+                <p class="lead">Ваш заказ успешно оформлен. Наш менеджер свяжется с вами в ближайшее время для подтверждения деталей.</p>
+                <p>Если у вас есть вопросы, вы можете связаться с нами по телефону или email, указанным внизу страницы.</p>
+                <div class="mt-4">
+                    <a href="{% url 'home' %}" class="btn btn-primary">Вернуться на главную</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

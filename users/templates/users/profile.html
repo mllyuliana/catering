@@ -1,0 +1,374 @@
+{% extends 'catering_app/base.html' %}
+{% load static %}
+
+{% block title %}Личный кабинет - Кейтеринг и Мобильный Бар{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'users/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container profile-container">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <!-- Боковое меню -->
+        <div class="col-md-3">
+            <!-- Меню навигации -->
+            <div class="card profile-card mb-4">
+                <div class="list-group list-group-flush profile-menu">
+                    <a href="{% url 'users:profile' %}" class="list-group-item list-group-item-action active">
+                        <i class="bi bi-person-circle me-2"></i> Профиль
+                    </a>
+                    {% if is_worker %}
+                    <a href="{% url 'workers:worker_schedule' %}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-calendar me-2"></i> Мое расписание
+                    </a>
+                    <a href="{% url 'workers:worker_orders' %}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-bag me-2"></i> Мои заказы
+                    </a>
+                    {% else %}
+                    <a href="{% url 'orders:order_list' %}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-bag me-2"></i> Мои заказы
+                    </a>
+                    {% endif %}
+                    <a href="#" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                        <i class="bi bi-key me-2"></i> Изменить пароль
+                    </a>
+                    <a href="{% url 'users:logout' %}" class="list-group-item list-group-item-action text-danger">
+                        <i class="bi bi-box-arrow-right me-2"></i> Выйти
+                    </a>
+                </div>
+                </div>
+            </div>
+
+        <!-- Информация о профиле -->
+        <div class="col-md-9">
+            <div class="card profile-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title mb-0">Информация о профиле</h4>
+                    <div>
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                            <i class="bi bi-pencil me-2"></i>Редактировать
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Имя пользователя</label>
+                                <p class="mb-0">{{ user.username }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Email</label>
+                                <p class="mb-0">{{ user.email }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Имя</label>
+                                <p class="mb-0">{{ user.first_name|default:"Не указано" }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Фамилия</label>
+                                <p class="mb-0">{{ user.last_name|default:"Не указано" }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Телефон</label>
+                                <p class="mb-0">{{ user.phone|default:"Не указан" }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-muted">Адрес</label>
+                                <p class="mb-0">{{ user.address|default:"Не указан" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <label class="form-label text-muted">Дата регистрации</label>
+                        <p class="mb-0">{{ user.date_joined|date:"d.m.Y H:i" }}</p>
+                </div>
+
+                    {% if is_worker and worker_info %}
+                    <div class="mt-4">
+                        <h5>Информация о работнике</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label text-muted">Должность</label>
+                                    <p class="mb-0">{{ worker_info.position }}</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted">Опыт работы</label>
+                                    <p class="mb-0">{{ worker_info.experience }} лет</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label text-muted">Статус</label>
+                                    <p class="mb-0">{{ worker_info.get_status_display }}</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted">Рейтинг</label>
+                                    <p class="mb-0">{{ worker_info.rating }}/5</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+            </div>
+        </div>
+        
+            <!-- История активности -->
+            <div class="card profile-card mt-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">История активности</h5>
+                </div>
+                <div class="card-body">
+                    <div class="activity-timeline">
+                        {% for activity in user_activities %}
+                        <div class="activity-item d-flex mb-3">
+                            <div class="activity-icon me-3">
+                                <i class="bi bi-circle-fill text-primary"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p class="mb-0">{{ activity.description }}</p>
+                                <small class="text-muted">{{ activity.created_at|date:"d.m.Y H:i" }}</small>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted text-center">История активности пуста</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно для редактирования профиля -->
+<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Редактирование профиля</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'users:profile' %}" id="profileForm">
+                        {% csrf_token %}
+                <div class="modal-body">
+                        {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <h5>Пожалуйста, исправьте следующие ошибки:</h5>
+                            {{ form.non_field_errors }}
+                            {% for field in form %}
+                                {% if field.errors %}
+                                <p>{{ field.label }}: {{ field.errors|join:", " }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_username" class="form-label">Имя пользователя</label>
+                                {{ form.username }}
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="id_email" class="form-label">Email</label>
+                                {{ form.email }}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_first_name" class="form-label">Имя</label>
+                                {{ form.first_name }}
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="id_last_name" class="form-label">Фамилия</label>
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="id_phone" class="form-label">Телефон</label>
+                                {{ form.phone }}
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="id_address" class="form-label">Адрес</label>
+                                {{ form.address }}
+                            </div>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+</div>
+
+<!-- Модальное окно для изменения пароля -->
+<div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="passwordModalLabel">Изменение пароля</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'users:change_password' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="id_old_password" class="form-label">Текущий пароль</label>
+                        <input type="password" name="old_password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_new_password1" class="form-label">Новый пароль</label>
+                        <input type="password" name="new_password1" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_new_password2" class="form-label">Подтверждение нового пароля</label>
+                        <input type="password" name="new_password2" class="form-control" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Изменить пароль</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded');
+    
+    // Проверка наличия Bootstrap
+    if (typeof bootstrap === 'undefined') {
+        console.error('Bootstrap is not loaded!');
+        return;
+    }
+    
+    // Проверка наличия модальных окон
+    const editProfileModalElement = document.getElementById('editProfileModal');
+    const passwordModalElement = document.getElementById('passwordModal');
+    
+    console.log('Edit Profile Modal Element:', editProfileModalElement);
+    console.log('Password Modal Element:', passwordModalElement);
+    
+    // Инициализация модальных окон
+    const editProfileModal = initModal('editProfileModal');
+    const passwordModal = initModal('passwordModal');
+    
+    console.log('Edit Profile Modal Instance:', editProfileModal);
+    console.log('Password Modal Instance:', passwordModal);
+
+    // Обработка отправки формы профиля
+    const profileForm = document.getElementById('profileForm');
+    if (profileForm) {
+        console.log('Profile Form found');
+        profileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Profile form submitted');
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Profile form response:', data);
+                if (data.success) {
+                    closeModal('editProfileModal');
+                    window.location.reload();
+                } else {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'alert alert-danger';
+                    errorDiv.textContent = data.error || 'Произошла ошибка при сохранении';
+                    profileForm.insertBefore(errorDiv, profileForm.firstChild);
+                }
+            })
+            .catch(error => {
+                console.error('Profile form error:', error);
+            });
+        });
+    } else {
+        console.error('Profile form not found!');
+    }
+
+    // Обработка отправки формы пароля
+    const passwordForm = document.getElementById('passwordForm');
+    if (passwordForm) {
+        console.log('Password Form found');
+        passwordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            console.log('Password form submitted');
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Password form response:', data);
+                if (data.success) {
+                    closeModal('passwordModal');
+                    window.location.reload();
+                } else {
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'alert alert-danger';
+                    errorDiv.textContent = data.error || 'Произошла ошибка при изменении пароля';
+                    passwordForm.insertBefore(errorDiv, passwordForm.firstChild);
+                }
+            })
+            .catch(error => {
+                console.error('Password form error:', error);
+            });
+        });
+    } else {
+        console.error('Password form not found!');
+    }
+
+    // Очистка ошибок при открытии модальных окон
+    document.querySelectorAll('[data-bs-toggle="modal"]').forEach(button => {
+        console.log('Modal trigger button found:', button);
+        button.addEventListener('click', function() {
+            console.log('Modal trigger button clicked');
+            const modalId = this.getAttribute('data-bs-target').substring(1);
+            console.log('Target modal ID:', modalId);
+            const modal = document.getElementById(modalId);
+            console.log('Target modal element:', modal);
+            const errorAlerts = modal.querySelectorAll('.alert-danger');
+            errorAlerts.forEach(alert => alert.remove());
+        });
+    });
+});
+</script>
+{% endblock %} 

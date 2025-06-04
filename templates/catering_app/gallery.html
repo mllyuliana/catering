@@ -1,0 +1,158 @@
+{% extends 'catering_app/base.html' %}
+{% load static %}
+
+{% block title %}Savore - Галерея{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/gallery.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="gallery">
+    <div class="gallery-header">
+        <h1 class="gallery-title">Галерея</h1>
+        <p class="gallery-subtitle">Наши лучшие моменты и блюда</p>
+        <div class="gallery-divider"></div>
+    </div>
+    
+    <div class="gallery-filters">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        <button class="filter-btn" data-filter="wedding">Свадьбы</button>
+        <button class="filter-btn" data-filter="corporate">Корпоративы</button>
+        <button class="filter-btn" data-filter="birthday">Детские праздники</button>
+    </div>
+    
+    <div class="gallery-grid">
+        <div class="gallery-item" data-category="wedding">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&auto=format&fit=crop&q=60" alt="Свадебное торжество">
+        </div>
+        <div class="gallery-item" data-category="corporate">
+            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&auto=format&fit=crop&q=60" alt="Корпоративное мероприятие">
+        </div>
+        <div class="gallery-item" data-category="birthday">
+            <img src="/static/images/kids.jpg" alt="Детский праздник">
+        </div>
+        <div class="gallery-item" data-category="food">
+            <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800&auto=format&fit=crop&q=60" alt="Свежий салат">
+        </div>
+        <div class="gallery-item" data-category="food">
+            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&auto=format&fit=crop&q=60" alt="Изысканная пицца">
+        </div>
+        <div class="gallery-item" data-category="food">
+            <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&auto=format&fit=crop&q=60" alt="Десерт">
+        </div>
+        <div class="gallery-item" data-category="wedding">
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&auto=format&fit=crop&q=60" alt="Свадебный банкет">
+        </div>
+        <div class="gallery-item" data-category="corporate">
+            <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&auto=format&fit=crop&q=60" alt="Корпоративный фуршет">
+        </div>
+        <div class="gallery-item" data-category="food">
+            <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=800&auto=format&fit=crop&q=60" alt="Французская кухня">
+        </div>
+        <div class="gallery-item" data-category="birthday">
+            <img src="https://images.unsplash.com/photo-1532499016263-f2c3e89de9cd?w=800&auto=format&fit=crop&q=60" alt="Детский праздник">
+        </div>
+        <div class="gallery-item" data-category="food">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop&q=60" alt="Стейк">
+        </div>
+        <div class="gallery-item" data-category="food">
+            <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800&auto=format&fit=crop&q=60" alt="Морская кухня">
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox">
+    <div class="lightbox-content">
+        <img src="" alt="" class="lightbox-img">
+        <button class="lightbox-close">&times;</button>
+        <button class="lightbox-prev">&lt;</button>
+        <button class="lightbox-next">&gt;</button>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Filter functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            button.classList.add('active');
+
+            const filter = button.getAttribute('data-filter');
+
+            galleryItems.forEach(item => {
+                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    item.style.display = 'block';
+                    setTimeout(() => item.style.opacity = '1', 50);
+                } else {
+                    item.style.opacity = '0';
+                    setTimeout(() => item.style.display = 'none', 300);
+                }
+            });
+        });
+    });
+
+    // Lightbox functionality
+    const lightbox = document.querySelector('.lightbox');
+    const lightboxImg = document.querySelector('.lightbox-img');
+    const closeBtn = document.querySelector('.lightbox-close');
+    const prevBtn = document.querySelector('.lightbox-prev');
+    const nextBtn = document.querySelector('.lightbox-next');
+    let currentImageIndex = 0;
+
+    galleryItems.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            currentImageIndex = index;
+            openLightbox(item.querySelector('img').src);
+        });
+    });
+
+    function openLightbox(src) {
+        lightboxImg.src = src;
+        lightbox.classList.add('active');
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+    }
+
+    function showPrevImage() {
+        currentImageIndex = (currentImageIndex - 1 + galleryItems.length) % galleryItems.length;
+        const newSrc = galleryItems[currentImageIndex].querySelector('img').src;
+        lightboxImg.src = newSrc;
+    }
+
+    function showNextImage() {
+        currentImageIndex = (currentImageIndex + 1) % galleryItems.length;
+        const newSrc = galleryItems[currentImageIndex].querySelector('img').src;
+        lightboxImg.src = newSrc;
+    }
+
+    closeBtn.addEventListener('click', closeLightbox);
+    prevBtn.addEventListener('click', showPrevImage);
+    nextBtn.addEventListener('click', showNextImage);
+
+    // Close lightbox on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showPrevImage();
+        if (e.key === 'ArrowRight') showNextImage();
+    });
+
+    // Add random delay to gallery items for fall-in animation
+    galleryItems.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.1}s`;
+    });
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,236 @@
+{% extends 'catering_app/base.html' %}
+{% load static %}
+
+{% block title %}Редактирование заказа - Кейтеринг и Мобильный Бар{% endblock %}
+
+{% block extra_css %}
+<style>
+    .order-edit-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: #FDF5E6;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-edit-title {
+        font-family: 'Playfair Display', serif;
+        color: #3B3735;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .form-section {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-section-title {
+        font-family: 'Playfair Display', serif;
+        color: #3B3735;
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #C4A484;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #3B3735;
+        font-weight: 500;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #C4A484;
+        border-radius: 6px;
+        transition: border-color 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #B08D6D;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(196, 164, 132, 0.1);
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background: #C4A484;
+        border: none;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #B08D6D;
+    }
+
+    .btn-secondary {
+        background: white;
+        border: 1px solid #C4A484;
+        color: #C4A484;
+    }
+
+    .btn-secondary:hover {
+        background: #FDF5E6;
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="order-edit-container">
+    <h1 class="order-edit-title">Редактирование заказа</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Основная информация -->
+        <div class="form-section">
+            <h2 class="form-section-title">Основная информация</h2>
+            
+            <div class="form-group">
+                <label for="{{ form.event_date.id_for_label }}">Дата мероприятия</label>
+                {{ form.event_date }}
+                {% if form.event_date.errors %}
+                <div class="error-message">{{ form.event_date.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.start_time.id_for_label }}">Время начала</label>
+                {{ form.start_time }}
+                {% if form.start_time.errors %}
+                <div class="error-message">{{ form.start_time.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.end_time.id_for_label }}">Время окончания</label>
+                {{ form.end_time }}
+                {% if form.end_time.errors %}
+                <div class="error-message">{{ form.end_time.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.event_type.id_for_label }}">Тип мероприятия</label>
+                {{ form.event_type }}
+                {% if form.event_type.errors %}
+                <div class="error-message">{{ form.event_type.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.menu_type.id_for_label }}">Тип меню</label>
+                {{ form.menu_type }}
+                {% if form.menu_type.errors %}
+                <div class="error-message">{{ form.menu_type.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.guests_count.id_for_label }}">Количество гостей</label>
+                {{ form.guests_count }}
+                {% if form.guests_count.errors %}
+                <div class="error-message">{{ form.guests_count.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Контактная информация -->
+        <div class="form-section">
+            <h2 class="form-section-title">Контактная информация</h2>
+            
+            <div class="form-group">
+                <label for="{{ form.contact_name.id_for_label }}">Контактное лицо</label>
+                {{ form.contact_name }}
+                {% if form.contact_name.errors %}
+                <div class="error-message">{{ form.contact_name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.contact_phone.id_for_label }}">Телефон</label>
+                {{ form.contact_phone }}
+                {% if form.contact_phone.errors %}
+                <div class="error-message">{{ form.contact_phone.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.contact_email.id_for_label }}">Email</label>
+                {{ form.contact_email }}
+                {% if form.contact_email.errors %}
+                <div class="error-message">{{ form.contact_email.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Дополнительная информация -->
+        <div class="form-section">
+            <h2 class="form-section-title">Дополнительная информация</h2>
+            
+            <div class="form-group">
+                <label for="{{ form.event_address.id_for_label }}">Адрес мероприятия</label>
+                {{ form.event_address }}
+                {% if form.event_address.errors %}
+                <div class="error-message">{{ form.event_address.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.special_requests.id_for_label }}">Особые пожелания</label>
+                {{ form.special_requests }}
+                {% if form.special_requests.errors %}
+                <div class="error-message">{{ form.special_requests.errors }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            <a href="{% url 'orders:order_list' %}" class="btn btn-secondary">Отмена</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Добавляем классы Bootstrap к полям формы
+    document.addEventListener('DOMContentLoaded', function() {
+        const formFields = document.querySelectorAll('input, select, textarea');
+        formFields.forEach(field => {
+            field.classList.add('form-control');
+        });
+    });
+</script>
+{% endblock %} 

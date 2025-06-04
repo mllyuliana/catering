@@ -1,0 +1,241 @@
+:root {
+    --text: #3B3735;
+    --background: #F6F3EF;
+    --champange: #C4A484;
+    --wine: #8E3B46;
+    --stone: #D8CFC4;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Nunito Sans', sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
+} 
+/* Footer */
+.footer {
+    height: 400px;
+    background-color: var(--background);
+    padding: 80px 0;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    padding: 0 120px;
+    height: 100%;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+}
+
+.footer-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 32px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 16px;
+}
+
+.social-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.footer-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+}
+
+.footer-link {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    color: var(--wine);
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.profile-icon {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.profile-icon:hover {
+    transform: scale(1.1);
+}
+
+.profile-icon svg {
+    display: block;
+}
+
+/* Стили для активного состояния иконки */
+.profile-icon.active svg circle {
+    fill: var(--wine);
+}
+
+/* Стили для модального окна авторизации */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: var(--background);
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--stone);
+}
+
+.auth-tab {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text);
+}
+
+.auth-tab.active {
+    color: var(--wine);
+    border-bottom: 2px solid var(--wine);
+}
+
+.auth-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--stone);
+    border-radius: 4px;
+}
+
+.auth-button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--wine);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.auth-button:hover {
+    background-color: var(--champange);
+}
+
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: var(--background);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 8px;
+    padding: 8px 0;
+}
+
+.profile-dropdown:hover .profile-dropdown-content {
+    display: block;
+}
+
+.profile-dropdown-content a {
+    color: var(--text);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.profile-dropdown-content a:hover {
+    background-color: var(--stone);
+}
+
+.logout-link {
+    color: var(--wine) !important;
+    border-top: 1px solid var(--stone);
+    margin-top: 8px;
+}
+
+.logout-link:hover {
+    background-color: var(--wine) !important;
+    color: white !important;
+} 

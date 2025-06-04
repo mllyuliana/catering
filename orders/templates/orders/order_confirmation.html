@@ -1,0 +1,125 @@
+{% extends 'catering_app/base.html' %}
+{% load static %}
+{% load order_filters %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body text-center">
+                    <div class="success-icon mb-4">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="#C4A484"/>
+                            <path d="M8 12L11 15L16 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h2 class="card-title mb-4">Заказ успешно создан!</h2>
+                    <p class="card-text mb-4">Спасибо за ваш заказ. Мы свяжемся с вами в ближайшее время для подтверждения деталей.</p>
+                    
+                    <div class="order-details mb-4">
+                        <h3 class="h5 mb-3">Детали заказа:</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Дата:</strong> {{ order.event_date|date:"d.m.Y" }}</p>
+                                <p><strong>Время:</strong> {{ order.start_time|time:"H:i" }} - {{ order.end_time|time:"H:i" }}</p>
+                                <p><strong>Адрес мероприятия:</strong> {{ order.event_address }}</p>
+                                <p><strong>Количество гостей:</strong> {{ order.guests_count }}</p>
+                                <p><strong>Тип меню:</strong> {{ order.menu_type.name }}</p>
+                                <p><strong>Стоимость меню:</strong> {{ order.menu_type.price_per_guest|multiply:order.guests_count }} BYN</p>
+                                {% if order.order_services.exists %}
+                                <p><strong>Дополнительные услуги:</strong></p>
+                                <ul class="list-unstyled ms-3">
+                                    {% for service in order.order_services.all %}
+                                    <li>{{ service.service.name }} - {{ service.price }} BYN</li>
+                                    {% endfor %}
+                                </ul>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Контактное лицо:</strong> {{ order.contact_name }}</p>
+                                <p><strong>Телефон:</strong> {{ order.contact_phone }}</p>
+                                <p><strong>Email:</strong> {{ order.contact_email }}</p>
+                                {% if order.special_requests %}
+                                <p><strong>Особые пожелания:</strong> {{ order.special_requests }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="total-cost mt-4 pt-4 border-t">
+                            <h4 class="h5 mb-3">Итоговая стоимость:</h4>
+                            <p class="h4 text-primary">
+                                {% with menu_cost=order.menu_type.price_per_guest|multiply:order.guests_count %}
+                                {% with services_cost=order.order_services.all|sum_services_price %}
+                                    {{ menu_cost|add:services_cost }} BYN
+                                {% endwith %}
+                                {% endwith %}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <a href="{% url 'home' %}" class="btn btn-primary me-2">На главную</a>
+                        <a href="{% url 'orders:order_create' %}" class="btn btn-outline-primary">Создать новый заказ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.success-icon {
+    animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}
+
+.order-details {
+    background: #FDF5E6;
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #C4A484;
+    border-color: #C4A484;
+}
+
+.btn-primary:hover {
+    background: #B08D6D;
+    border-color: #B08D6D;
+}
+
+.btn-outline-primary {
+    color: #C4A484;
+    border-color: #C4A484;
+}
+
+.btn-outline-primary:hover {
+    background: #C4A484;
+    border-color: #C4A484;
+    color: white;
+}
+
+.total-cost {
+    text-align: center;
+}
+
+.total-cost .text-primary {
+    color: #C4A484;
+    font-weight: bold;
+}
+</style>
+{% endblock %}

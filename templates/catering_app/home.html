@@ -1,0 +1,68 @@
+{% extends 'catering_app/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block title %}Главная - Catering Service{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Гастрономия с выездом — под вашу идею</h1>
+        <p class="hero-subtitle">Авторское меню, обслуживание, оформление — всё в одном заказе. Для свадеб, корпоративов, дней рождений и не только.</p>
+        <a href="{% url 'menu:menu_list' %}" class="hero-button">
+            <span class="hero-button-text">Открыть меню</span>
+        </a>
+    </div>
+</div>
+
+<div class="benefits-section">
+    <h2 class="benefits-title">Почему выбирают нас</h2>
+    <div class="benefits-cards">
+        <div class="benefit-card">
+            <img src="{% static 'images/why1.svg' %}" alt="Иконка" class="benefit-icon">
+            <h3 class="benefit-card-title">Индивидуальное меню</h3>
+            <p class="benefit-card-text">Выбирайте блюда и напитки под вкус, бюджет и стиль вашего мероприятия.</p>
+        </div>
+        <div class="benefit-card">
+            <img src="{% static 'images/why2.svg' %}" alt="Иконка" class="benefit-icon">
+            <h3 class="benefit-card-title">Команда профессионалов</h3>
+            <p class="benefit-card-text">Опытные повара, бармены и официанты — от подачи до улыбки.</p>
+        </div>
+        <div class="benefit-card">
+            <img src="{% static 'images/why3.svg' %}" alt="Иконка" class="benefit-icon">
+            <h3 class="benefit-card-title">Полный сервис</h3>
+            <p class="benefit-card-text">Аренда мебели и посуды, декор, текстиль, зона бара — всё в одном заказе.</p>
+        </div>
+    </div>
+</div>
+
+<div class="services-section">
+    <div class="services-content">
+        <img src="/static/images/services.png" alt="Услуги" class="services-image">
+        <div class="services-info">
+            <h2 class="services-title">Наши услуги</h2>
+            <ul class="services-list">
+                <li>Свадебный банкет</li>
+                <li>Корпоративный фуршет</li>
+                <li>Детский праздник</li>
+                <li>День рождения</li>
+                <li>Выездной бар</li>
+            </ul>
+            <a href="{% url 'services' %}" class="services-button">
+                <span class="services-button-text">Подробнее</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="cta-section">
+    <h2 class="cta-title">Готовы создать идеальное событие?</h2>
+    <p class="cta-subtitle">Вы можете рассчитать стоимость и оставить заявку прямо на сайте.</p>
+    <a href="{% url 'orders:order_create' %}" class="cta-button">
+        <span class="cta-button-text">Рассчитать стоимость</span>
+    </a>
+</div>
+{% endblock %} 

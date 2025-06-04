@@ -1,0 +1,123 @@
+{% load order_filters %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Подтверждение заказа | Savore Catering</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(196, 164, 132, 0.10);
+            overflow: hidden;
+        }
+        .header {
+            background: #C4A484;
+            color: #fff;
+            padding: 32px 24px 16px 24px;
+            text-align: center;
+        }
+        .header img {
+            width: 64px;
+            margin-bottom: 12px;
+        }
+        .header h2 {
+            margin: 0 0 8px 0;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+        .content {
+            padding: 32px 24px 24px 24px;
+        }
+        .content p {
+            margin: 0 0 16px 0;
+            font-size: 1.1rem;
+        }
+        .order-details {
+            background: #FDF5E6;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 24px 0 16px 0;
+            font-size: 1rem;
+        }
+        .order-details ul {
+            padding-left: 18px;
+            margin: 0;
+        }
+        .order-details li {
+            margin-bottom: 8px;
+        }
+        .btn {
+            display: inline-block;
+            background: #C4A484;
+            color: #fff !important;
+            text-decoration: none;
+            padding: 12px 32px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            margin-top: 16px;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #B08D6D;
+        }
+        .footer {
+            background: #f8f9fa;
+            color: #666;
+            text-align: center;
+            padding: 18px 24px;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 600px) {
+            .email-container, .content, .header, .footer {
+                padding-left: 8px !important;
+                padding-right: 8px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h2>Заказ #{{ order.id }} подтвержден</h2>
+            <div style="font-size:1.1rem;opacity:0.9;">Спасибо, что выбрали Savore Catering!</div>
+        </div>
+        <div class="content">
+            <p>Здравствуйте, <b>{{ order.user.get_full_name|default:order.user.username }}</b>!</p>
+            <p>Ваш заказ был <b>подтвержден</b>. Мы готовимся к вашему мероприятию и свяжемся с вами для уточнения деталей.</p>
+            <div class="order-details">
+                <strong>Детали заказа:</strong>
+                <ul>
+                    <li><b>Дата:</b> {{ order.event_date }}</li>
+                    <li><b>Время:</b> {{ order.start_time }} – {{ order.end_time }}</li>
+                    <li><b>Тип мероприятия:</b> {{ order.get_event_type_display }}</li>
+                    <li><b>Количество гостей:</b> {{ order.guests_count }}</li>
+                    <li><b>Адрес:</b> {{ order.event_address }}</li>
+                    {% with menu_cost=order.menu_type.price_per_guest|default:0|multiply:order.guests_count|default:0 %}
+                    {% with services_cost=order.order_services.all|sum_services_price|default:0 %}
+                        <li><b>Итоговая стоимость:</b> {{ menu_cost|add:services_cost }} BYN</li>
+                    {% endwith %}
+                    {% endwith %}
+                </ul>
+            </div>
+            <p style="margin-bottom: 6px;">Если у вас есть вопросы, свяжитесь с нами:</p>
+            <p style="margin:0 0 18px 0;">
+                <b>Телефон:</b> <a href="tel:+375291234567" style="color:#C4A484;text-decoration:none;">+375 (29) 123-45-67</a><br>
+                <b>Email:</b> <a href="mailto:savore.catering.belarus@gmail.com" style="color:#C4A484;text-decoration:none;">savore.catering.belarus@gmail.com</a>
+            </p>
+
+        </div>
+        <div class="footer">
+            © 2025 Savore Catering &nbsp;|&nbsp; Все права защищены
+        </div>
+    </div>
+</body>
+</html> 

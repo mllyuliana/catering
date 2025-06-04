@@ -1,0 +1,163 @@
+{% extends 'catering_app/base.html' %}
+{% load static %}
+
+{% block title %}Savore - Контакты{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contacts.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+<section class="contacts-section">
+    <div class="contacts-container">
+        <div class="contacts-header">
+            <h1 class="contacts-title">Свяжитесь с нами</h1>
+            <p class="contacts-subtitle">Мы всегда готовы ответить на ваши вопросы и помочь с организацией вашего мероприятия</p>
+        </div>
+
+        <div class="contacts-grid">
+            <!-- Contact Information -->
+            <div class="contact-info">
+                <div class="contact-info-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Адрес</h3>
+                        <p>г. Минск, ул. Примерная, 123<br>Бизнес-центр "Savore"</p>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Телефон</h3>
+                        <p>+375 (29) 123-45-67<br>+375 (33) 765-43-21</p>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p>savore@catering.com</p>
+                    </div>
+                </div>
+
+                <div class="contact-info-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Время работы</h3>
+                        <p>Круглосуточно</p>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a src="{% static 'images/instagram.svg' %}" href="#" class="social-link" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a src="{% static 'images/viber.svg' %}" href="#" class="social-link" title="Viber">
+                        <i class="fab fa-viber"></i>
+                    </a>
+                    <a src="{% static 'images/telegram.svg' %}" href="#" class="social-link" title="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+
+
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <form id="contactForm" method="POST" action="{% url 'contact_form' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Ваше имя</label>
+                        <input type="text" id="name" name="name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Тема</label>
+                        <input type="text" id="subject" name="subject" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Сообщение</label>
+                        <textarea id="message" name="message" class="form-control" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Отправить сообщение</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Map -->
+        <div class="map-container">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2350.8504901083!2d27.56161877677734!3d53.90260287205566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbcfd35b1e6ad3%3A0xb61b853ddb570d9!2z0YPQuy4g0JrRgNC10LzQu9GM0L3QtdC90LAg0JzQuNC90YHQug!5e0!3m2!1sru!2sby!4v1709912345678!5m2!1sru!2sby"
+                allowfullscreen="" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Phone number formatting
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function(e) {
+        let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
+        e.target.value = !x[2] ? x[1] : '+375 (' + x[2] + ') ' + (x[3] ? x[3] + '-' + x[4] : x[3]) + (x[5] ? '-' + x[5] : '');
+    });
+
+    // Form submission
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
+                form.reset();
+            } else {
+                alert('Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте позже.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Произошла ошибка при отправке сообщения. Пожалуйста, попробуйте позже.');
+        });
+    });
+});
+</script>
+{% endblock %} 

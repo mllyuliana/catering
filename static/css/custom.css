@@ -1,0 +1,900 @@
+:root {
+    --background: #F6F3EF;
+    --text: #3B3735;
+    --champange: #C4A484;
+    --wine: #8E3B46;
+    --stone: #D8CFC4;
+}
+
+body {
+    background-color: var(--background);
+    margin: 0;
+    padding: 0;
+}
+
+/* Utility Bar */
+.utility-bar {
+    background-color: var(--stone);
+    height: 40px;
+    width: 100%;
+    padding: 0 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.phone-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.phone-icon {
+    width: 17px;
+    height: 17px;
+}
+
+.phone-number {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    letter-spacing: 2px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 12px;
+}
+
+.social-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+/* Header */
+.header {
+    height: 80px;
+    padding: 0 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--background);
+    position: relative;
+}
+
+.logotip {
+    width: 137px;
+    height: 57px;
+}
+
+/* Burger Menu */
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1000;
+    position: relative;
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 15px;
+}
+
+.burger-line {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text);
+    transition: all 0.3s ease;
+    display: block;
+    border-radius: 3px;
+}
+
+.burger-menu.active .burger-line:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+}
+
+.burger-menu.active .burger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.burger-menu.active .burger-line:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+}
+
+/* Mobile Menu */
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--background);
+    z-index: 999;
+    padding: 80px 20px 20px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
+
+.mobile-menu.active {
+    transform: translateX(0);
+}
+
+.mobile-menu .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mobile-menu .nav-link {
+    font-size: 18px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--stone);
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.mobile-menu .nav-link:hover {
+    color: var(--wine);
+}
+
+/* Override Bootstrap navbar styles */
+.header .navbar {
+    display: flex;
+    gap: 32px;
+    padding: 0;
+    margin: 0;
+    background-color: transparent !important;
+    box-shadow: none;
+}
+
+.header .nav-link {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--text) !important;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.header .nav-link:hover {
+    color: var(--wine) !important;
+}
+
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.order-button {
+    width: 200px;
+    height: 48px;
+    background-color: var(--wine);
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.order-button-text {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--background);
+}
+
+.order-button:hover {
+    background-color: #7a323c;
+    text-decoration: none;
+}
+
+.order-button:hover .order-button-text {
+    color: var(--background);
+}
+
+.profile-icon {
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.profile-icon:hover {
+    transform: scale(1.1);
+}
+
+/* Модальное окно авторизации */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1055 !important;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    outline: 0;
+}
+
+.modal.show {
+    display: block !important;
+}
+
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 1.75rem auto;
+    max-width: 500px;
+    pointer-events: auto;
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: var(--background);
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    outline: 0;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050 !important;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+}
+
+.modal-backdrop.show {
+    opacity: 0.5;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-body {
+    position: relative;
+    flex: 1 1 auto;
+    padding: 1rem;
+}
+
+/* Стили для табов в модальном окне */
+.modal .nav-tabs {
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 1rem;
+}
+
+.modal .nav-tabs .nav-link {
+    margin-bottom: -1px;
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    cursor: pointer;
+    color: var(--text);
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    padding: 0.5rem 1rem;
+}
+
+.modal .nav-tabs .nav-link.active {
+    color: var(--wine);
+    background-color: #fff;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.modal .tab-content {
+    position: relative;
+    z-index: 1;
+}
+
+.modal .tab-pane {
+    display: none;
+}
+
+.modal .tab-pane.show {
+    display: block;
+}
+
+/* Стили для форм в модальном окне */
+.modal .form-label {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+
+.modal .form-control {
+    padding: 0.75rem;
+    border: 1px solid var(--stone);
+    border-radius: 0.25rem;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.modal .form-control:focus {
+    border-color: var(--wine);
+    box-shadow: 0 0 0 0.2rem rgba(142, 59, 70, 0.25);
+}
+
+.modal .btn-primary {
+    background-color: var(--wine);
+    border-color: var(--wine);
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+}
+
+.modal .btn-primary:hover {
+    background-color: #7a323c;
+    border-color: #7a323c;
+}
+
+.modal .alert {
+    margin-bottom: 1rem;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+
+.modal .alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+/* Footer */
+.footer {
+    background-color: var(--stone);
+    padding: 80px 0;
+
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 80px;
+    padding: 0 120px;
+    height: 100%;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 25%;
+}
+
+.footer-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 32px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 16px;
+}
+
+.footer-social .social-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.footer-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+}
+
+.footer-link {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--text);
+    text-decoration: none;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: var(--wine);
+}
+
+.footer-contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+}
+
+.footer-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.footer-contact-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.footer-contact-text {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--text);
+}
+
+.footer-subscribe {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+}
+
+.footer-subscribe-title {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--text);
+}
+
+.footer-subscribe-input {
+    width: 100%;
+    height: 48px;
+    background-color: var(--background);
+    border: 1px solid var(--text);
+    border-radius: 8px;
+    padding: 0 16px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    color: var(--text);
+}
+
+.footer-subscribe-input::placeholder {
+    color: rgba(59, 55, 53, 0.5);
+}
+
+.footer-subscribe-button {
+    width: 100%;
+    height: 48px;
+    background-color: var(--wine);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--background);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.footer-subscribe-button:hover {
+    background-color: #7a323c;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .utility-bar,
+    .header,
+    .footer-content {
+        padding: 0 60px;
+    }
+
+    .profile-container {
+        padding: 0 60px;
+    }
+
+    .header-buttons {
+        gap: 20px;
+    }
+
+    .order-button {
+        width: 180px;
+    }
+}
+
+@media (max-width: 992px) {
+    .header .navbar {
+        display: none;
+    }
+
+    .burger-menu {
+        display: flex;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+    
+    .footer-content {
+        flex-wrap: wrap;
+        gap: 40px;
+    }
+    
+    .footer-column {
+        width: 50%;
+    }
+
+    .profile-container {
+        padding: 0 40px;
+    }
+
+    .profile-card {
+        margin-bottom: 20px;
+    }
+
+    .table-responsive {
+        margin: 0 -15px;
+    }
+
+    .header {
+        padding: 15px 20px;
+        position: relative;
+    }
+
+    .header-buttons {
+        margin-right: 15px;
+    }
+
+    .logotip {
+        width: 120px;
+        height: auto;
+    }
+
+    .order-button {
+        width: 160px;
+        height: 40px;
+    }
+
+    .order-button-text {
+        font-size: 16px;
+    }
+
+    .footer {
+        padding: 40px 0;
+    }
+
+    .footer-content {
+        padding: 0 40px;
+    }
+
+    .footer-column {
+        align-items: flex-start;
+    }
+
+    .footer-menu {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .utility-bar,
+    .header,
+    .footer-content {
+        padding: 0 20px;
+    }
+    
+    .footer-column {
+        width: 100%;
+    }
+
+    .profile-container {
+        padding: 0 20px;
+    }
+
+    .profile-menu {
+        margin-bottom: 0;
+    }
+
+    .card-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start !important;
+    }
+
+    .card-header .btn {
+        width: 100%;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.5rem;
+        font-size: 14px;
+    }
+
+    .table td .btn {
+        padding: 0.25rem 0.5rem;
+    }
+
+    .activity-timeline {
+        padding: 0;
+    }
+
+    .activity-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .activity-icon {
+        margin-bottom: 10px;
+    }
+
+    .utility-bar {
+        height: auto;
+        padding: 10px 20px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .phone-container {
+        justify-content: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
+    .header {
+        padding: 10px 15px;
+    }
+
+    .logotip {
+        width: 120px;
+        height: auto;
+    }
+
+    .header-buttons {
+        width: auto;
+        justify-content: flex-end;
+    }
+
+    .order-button {
+        width: auto;
+        max-width: 200px;
+    }
+
+    .mobile-menu {
+        padding-top: 60px;
+    }
+
+    .mobile-menu .nav-link {
+        font-size: 16px;
+    }
+
+    .footer {
+        padding: 30px 0;
+    }
+
+    .footer-content {
+        padding: 0 20px;
+        gap: 30px;
+    }
+
+    .footer-logo {
+        width: 100px;
+        margin-bottom: 20px;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .footer-social .social-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .footer-menu {
+        gap: 12px;
+    }
+
+    .footer-link {
+        font-size: 14px;
+    }
+
+    .footer-contacts {
+        align-items: center;
+    }
+
+    .footer-contact-text {
+        font-size: 14px;
+    }
+
+    .footer-subscribe {
+        align-items: center;
+    }
+
+    .footer-subscribe-title {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .footer-subscribe-input,
+    .footer-subscribe-button {
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .burger-menu {
+        width: 25px;
+        height: 18px;
+    }
+
+    .burger-line {
+        height: 2px;
+    }
+
+    .burger-menu.active .burger-line:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .burger-menu.active .burger-line:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+}
+
+@media (max-width: 576px) {
+    .utility-bar {
+        padding: 8px 15px;
+    }
+
+    .phone-number {
+        font-size: 12px;
+    }
+
+    .social-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .header {
+        padding: 8px 15px;
+    }
+
+    .logotip {
+        width: 100px;
+    }
+
+    .order-button {
+        height: 36px;
+    }
+
+    .order-button-text {
+        font-size: 14px;
+    }
+
+    .mobile-menu {
+        padding-top: 50px;
+    }
+
+    .mobile-menu .nav-link {
+        font-size: 15px;
+        padding: 8px 0;
+    }
+
+    .profile-container {
+        padding: 0 15px;
+    }
+
+    .profile-card {
+        border-radius: 8px;
+    }
+
+    .table th,
+    .table td {
+        padding: 0.4rem;
+        font-size: 13px;
+    }
+
+    .table td .btn {
+        padding: 0.2rem 0.4rem;
+    }
+
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+
+    .modal-body {
+        padding: 0.75rem;
+    }
+
+    .form-label {
+        font-size: 13px;
+    }
+
+    .form-control {
+        font-size: 13px;
+        padding: 0.5rem;
+    }
+
+    .btn {
+        font-size: 13px;
+        padding: 0.5rem 1rem;
+    }
+
+    .footer {
+        padding: 20px 0;
+    }
+
+    .footer-content {
+        padding: 0 15px;
+        gap: 20px;
+    }
+
+    .footer-logo {
+        width: 80px;
+        margin-bottom: 15px;
+    }
+
+    .footer-social .social-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .footer-menu {
+        gap: 10px;
+    }
+
+    .footer-link {
+        font-size: 13px;
+    }
+
+    .footer-contact-text {
+        font-size: 13px;
+    }
+
+    .footer-subscribe-title {
+        font-size: 15px;
+    }
+
+    .footer-subscribe-input,
+    .footer-subscribe-button {
+        height: 36px;
+        font-size: 13px;
+    }
+}
+
+/* Удаляем старые стили */
+.CTA, .CTA .text-wrapper-6 {
+    display: none !important;
+}
+
+/* Global link styles */
+a {
+    text-decoration: none !important;
+} 

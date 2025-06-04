@@ -1,0 +1,122 @@
+{% extends 'catering_app/base.html' %}
+{% load static %}
+
+{% block title %}Мои заказы - Кейтеринг и Мобильный Бар{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <!-- Боковое меню -->
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Меню</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{% url 'profile' %}" class="list-group-item list-group-item-action">
+                        <i class="bi bi-person-circle me-2"></i> Профиль
+                    </a>
+                    <a href="{% url 'orders' %}" class="list-group-item list-group-item-action active">
+                        <i class="bi bi-bag me-2"></i> Мои заказы
+                    </a>
+                    <a href="{% url 'logout' %}" class="list-group-item list-group-item-action text-danger">
+                        <i class="bi bi-box-arrow-right me-2"></i> Выйти
+                    </a>
+                </div>
+            </div>
+
+            <!-- Информация о пользователе -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Информация</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2"><strong>Имя пользователя:</strong> {{ user.username }}</p>
+                    <p class="mb-2"><strong>Email:</strong> {{ user.email }}</p>
+                    <p class="mb-2"><strong>Телефон:</strong> {{ user.phone }}</p>
+                    <p class="mb-2"><strong>Адрес:</strong> {{ user.address }}</p>
+                    <p class="mb-0"><strong>Дата регистрации:</strong> {{ user.date_joined|date:"d.m.Y" }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Список заказов -->
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Мои заказы</h4>
+                </div>
+                <div class="card-body">
+                    {% if orders %}
+                        <div class="list-group">
+                            {% for order in orders %}
+                                <div class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between align-items-center">
+                                        <div>
+                                            <h5 class="mb-1">Заказ #{{ order.id }}</h5>
+                                            <p class="mb-1">
+                                                <strong>Дата мероприятия:</strong> {{ order.event_date|date:"d.m.Y" }}<br>
+                                                <strong>Время:</strong> {{ order.start_time|time:"H:i" }} - {{ order.end_time|time:"H:i" }}<br>
+                                                <strong>Тип мероприятия:</strong> {{ order.get_event_type_display }}<br>
+                                                <strong>Формат меню:</strong> {{ order.menu_type.name }}<br>
+                                                <strong>Количество гостей:</strong> {{ order.guests_count }}
+                                            </p>
+                                            <small class="text-muted">Создан: {{ order.created_at|date:"d.m.Y H:i" }}</small>
+                                        </div>
+                                        <div class="text-end">
+                                            <span class="badge {% if order.status == 'pending' %}bg-warning{% elif order.status == 'confirmed' %}bg-success{% elif order.status == 'cancelled' %}bg-danger{% else %}bg-secondary{% endif %}">
+                                                {{ order.get_status_display }}
+                                            </span>
+                                            <p class="text-lg fw-semibold mt-2">{{ order.calculate_total_price }} ₽</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-3 pt-3 border-top">
+                                        <h6 class="fw-semibold mb-2">Выбранные блюда:</h6>
+                                        <div class="row">
+                                            {% for item in order.orderitem_set.all %}
+                                                <div class="col-md-6 mb-2">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <p class="mb-0 fw-medium">{{ item.menu_item.name }}</p>
+                                                            <small class="text-muted">{{ item.menu_item.get_category_display }}</small>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <small class="text-muted">{{ item.quantity }} шт.</small>
+                                                            <p class="mb-0 fw-medium">{{ item.price }} ₽</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="bi bi-bag-x display-1 text-muted"></i>
+                            <h5 class="mt-3">У вас пока нет заказов</h5>
+                            <p class="text-muted">Оформите свой первый заказ, и он появится здесь</p>
+                            <a href="{% url 'order_wizard' %}" class="btn btn-primary mt-3">
+                                <i class="bi bi-plus-circle me-2"></i>Создать заказ
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

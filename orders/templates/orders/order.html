@@ -1,0 +1,157 @@
+{% extends "catering_app/base.html" %}
+{% load static %}
+
+{% block title %}Оформление заказа{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/order.css' %}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="order-header">
+    <div class="order-header-content">
+        <h1 class="order-title">Рассчитать стоимость и забронировать</h1>
+        <p class="order-subtitle">Пять шагов до идеального мероприятия</p>
+        <button class="order-button" onclick="openModal()">Начать расчет</button>
+    </div>
+</div>
+
+<div class="examples">
+    <div class="examples-content">
+        <h2 class="examples-title">Примеры наших мероприятий</h2>
+        <div class="examples-cards">
+            <div class="example-card">
+                <div class="example-photo">
+                    <img src="{% static 'images/example1.jpg' %}" alt="Свадебный фуршет">
+                </div>
+                <h3 class="example-card-title">Свадебный фуршет</h3>
+                <p class="example-card-description">Изысканные закуски и шампанское в парке</p>
+            </div>
+            <div class="example-card">
+                <div class="example-photo">
+                    <img src="{% static 'images/example2.jpg' %}" alt="Корпоратив">
+                </div>
+                <h3 class="example-card-title">Корпоратив</h3>
+                <p class="example-card-description">Гастрономическое сопровождение с баром под живую музыку</p>
+            </div>
+            <div class="example-card">
+                <div class="example-photo">
+                    <img src="{% static 'images/example3.jpg' %}" alt="Кофе-брейк">
+                </div>
+                <h3 class="example-card-title">Кофе-брейк</h3>
+                <p class="example-card-description">Ароматный кофе, свежая выпечка и лёгкие закуски в перерывах переговоров</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно заказа -->
+<div class="order-modal" id="orderModal">
+    <div class="order-modal-content">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        
+        <div class="order-steps">
+            <div class="step-circle active" id="step1-circle">1</div>
+            <div class="step-circle" id="step2-circle">2</div>
+            <div class="step-circle" id="step3-circle">3</div>
+            <div class="step-circle" id="step4-circle">4</div>
+            <div class="step-circle" id="step5-circle">5</div>
+            <div class="step-circle" id="step6-circle">6</div>
+        </div>
+        
+        <div class="step-labels">
+            <span>Дата и время</span>
+            <span>Формат</span>
+            <span>Меню</span>
+            <span>Услуги</span>
+            <span>Контакты</span>
+            <span>Проверка</span>
+        </div>
+        
+        <div id="steps-container">
+            {% include 'catering_app/steps/step1.html' %}
+            {% include 'catering_app/steps/step2.html' %}
+            {% include 'catering_app/steps/step3.html' %}
+            {% include 'catering_app/steps/step4.html' %}
+            {% include 'catering_app/steps/step5.html' %}
+            {% include 'catering_app/steps/step6.html' %}
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ru.js"></script>
+<script>
+let currentStep = 1;
+
+function showStep(stepNumber) {
+    // Скрываем все шаги
+    document.querySelectorAll('.step-content').forEach(step => {
+        step.style.display = 'none';
+    });
+    
+    // Показываем нужный шаг
+    document.getElementById(`step${stepNumber}-content`).style.display = 'block';
+    
+    // Обновляем кружки шагов
+    document.querySelectorAll('.step-circle').forEach((circle, index) => {
+        if (index + 1 <= stepNumber) {
+            circle.classList.add('active');
+        } else {
+            circle.classList.remove('active');
+        }
+    });
+    
+    currentStep = stepNumber;
+}
+
+function nextStep() {
+    if (currentStep < 6) {
+        showStep(currentStep + 1);
+    }
+}
+
+function prevStep() {
+    if (currentStep > 1) {
+        showStep(currentStep - 1);
+    }
+}
+
+function openModal() {
+    document.getElementById('orderModal').style.display = 'flex';
+    showStep(1);
+}
+
+function closeModal() {
+    document.getElementById('orderModal').style.display = 'none';
+}
+
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    showStep(1);
+});
+
+// Инициализация календаря
+flatpickr("#datePicker", {
+    locale: "ru",
+    dateFormat: "d.m.Y",
+    minDate: "today"
+});
+
+// Инициализация выбора времени
+flatpickr("#startTimePicker", {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
+
+flatpickr("#endTimePicker", {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+    time_24hr: true
+});
+</script>
+{% endblock %} 
